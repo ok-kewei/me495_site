@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2021-12-22 Wed 16:01 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xacro Explorer</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Matthew Elwin">
+<link rel="stylesheet" href="./pubme.css" type="text/css"/>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="./index.html"> HOME </a>
+</div><div id="content">
+<header>
+<h1 class="title">Xacro Explorer</h1>
+</header><nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org1a2b8f7">Overview</a></li>
+<li><a href="#org1c0f2a8">Exploration of turtlebot 3 urdf</a></li>
+<li><a href="#orga6650bd">Exploration of Interbotix ROS arms</a></li>
+</ul>
+</div>
+</nav>
+
+<div id="outline-container-org1a2b8f7" class="outline-2">
+<h2 id="org1a2b8f7">Overview</h2>
+<div class="outline-text-2" id="text-org1a2b8f7">
+<p>
+In this activity we will explore the <code>turtlebot3</code> and <code>interbotix_arm</code> packages to see how they use xacro, urdf, and sdf files
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1c0f2a8" class="outline-2">
+<h2 id="org1c0f2a8">Exploration of turtlebot 3 urdf</h2>
+<div class="outline-text-2" id="text-org1c0f2a8">
+<p>
+The turtlebot3 is a small differential drive robot designed to work with ROS.
+We will focus on the "burger" variant.
+</p>
+<ol class="org-ol">
+<li>Explore the project directory <code>roscd turtlebot3_description</code>.
+<ul class="org-ul">
+<li>This package describes the turtlebot3</li>
+<li>Of particular interest is the <code>urdf</code> directory</li>
+</ul></li>
+<li>Notice that the description is divided across several files</li>
+<li><code>common_properties.xacro</code> is a central place to define some colors for the <code>urdf</code> file</li>
+<li><code>turtlebot3_burger.urdf.xacro</code> is the basic <code>urdf</code> for rviz.
+<ul class="org-ul">
+<li>By using <code>.stl</code> files for the link geometry, complex geometry is captured with few
+links. If you had a CAD model of a robot you would convert to <code>.stl</code> or <code>.dae</code> and
+use this feature.</li>
+<li>Notice that the <code>.stl</code> file is visual only.  The collision is a bounding box.</li>
+<li>The inertial values are likely the output of a CAD program</li>
+</ul></li>
+<li><code>turtlebot3_burger.gazebo.xacro</code> adds gazebo-specific tags to the link.
+<ul class="org-ul">
+<li>Notice that the Differential Drive plugin is used to control the robot.</li>
+<li>The turtlebot also has an <code>imu</code> and laser scanner that are modeled using
+built-in gazebo plugins.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orga6650bd" class="outline-2">
+<h2 id="orga6650bd">Exploration of Interbotix ROS arms</h2>
+<div class="outline-text-2" id="text-orga6650bd">
+<ol class="org-ol">
+<li><a href="https://github.com/Interbotix/interbotix_ros_manipulators/tree/main/interbotix_ros_xsarms">https://github.com/Interbotix/interbotix_ros_manipulators/tree/main/interbotix_ros_xsarms</a></li>
+<li>Let's examine the <code>interbotix_descriptions</code> package</li>
+<li>Often, the <code>gazebo</code> code is completely separated  from the <code>robot</code> description, enabling the
+description to be used without requiring gazebo</li>
+<li>Examine the <code>urdf</code> directory
+<ul class="org-ul">
+<li>Notice how the gazebo code is only included if explicitly requested</li>
+<li>Notice how the name of everything is prefixed with a robot name, allowing you to have multiple
+interbotix arms on the same machine</li>
+</ul></li>
+<li>The <code>&lt;transmission&gt;</code> tags are used by the ros_control package
+<ul class="org-ul">
+<li>Many ROS packages use <code>ros_control</code> as a standard interface for controlling the robot</li>
+</ul></li>
+<li>Look at <code>interbotix_xsarm_gazebo/config/interbotix_texture.gazebo</code>
+<ul class="org-ul">
+<li>This is setting up materials and some other gazebo specific properties</li>
+</ul></li>
+<li>Look at the gazebo launch file, what is it doing?</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p><p class="outline-2">Author: Matthew Elwin</p></p>
+</div>
+</body>
+</html>

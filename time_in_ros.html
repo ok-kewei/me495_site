@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2021-12-22 Wed 16:01 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Time and ROS</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Matthew Elwin">
+<link rel="stylesheet" href="./pubme.css" type="text/css"/>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="./index.html"> HOME </a>
+</div><div id="content">
+<header>
+<h1 class="title">Time and ROS</h1>
+</header><nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge8304ae">Overview</a></li>
+<li><a href="#orgf31abfc">Real-Time Systems</a>
+<ul>
+<li><a href="#org35ed016">Speed vs Real-Time</a></li>
+<li><a href="#org810bb4e">ROS and Real Time</a></li>
+</ul>
+</li>
+<li><a href="#org9613c87">Time</a>
+<ul>
+<li><a href="#org5e47452">Simulation Time</a></li>
+</ul>
+</li>
+<li><a href="#org028208c">Time Concepts</a>
+<ul>
+<li><a href="#orga1b7825">Measuring Time In Ros</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+
+<div id="outline-container-orge8304ae" class="outline-2">
+<h2 id="orge8304ae">Overview</h2>
+<div class="outline-text-2" id="text-orge8304ae">
+<ul class="org-ul">
+<li>When programming robots, understanding timing requirements is crucial.</li>
+<li>Controls and sensor information must be processed at the correct times to be effective</li>
+<li>Different timing conditions can lead to different robot behavior</li>
+<li>Understanding and compensating for timing is crucial and is also an important factor in determining when to use ROS and
+more importantly, when to NOT use ROS</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf31abfc" class="outline-2">
+<h2 id="orgf31abfc">Real-Time Systems</h2>
+<div class="outline-text-2" id="text-orgf31abfc">
+<ul class="org-ul">
+<li>A real-time system is any system whose correctness depends on the timing of the results in addition to the logic.</li>
+<li>Almost all systems, at some level, have some type of timing requirement
+<ul class="org-ul">
+<li>However, most systems have relatively simple requirements and are not treated as <i>real-time</i></li>
+<li>For example, a text editor be seen as a <i>real-time</i> system in that if it took a really long time for a character to render
+after you typed it, it would be unusable</li>
+</ul></li>
+<li>A soft real-time system is a system where failure to meet timing requirements causes something not-great to happen
+<ul class="org-ul">
+<li>An example is anytime you are on a laggy website or phone app</li>
+</ul></li>
+<li>A hard real-time system is a system where failure to meet timing requirements causes catastrophic failure
+<ul class="org-ul">
+<li>Brakes!</li>
+</ul></li>
+</ul>
+</div>
+<div id="outline-container-org35ed016" class="outline-3">
+<h3 id="org35ed016">Speed vs Real-Time</h3>
+<div class="outline-text-3" id="text-org35ed016">
+<ul class="org-ul">
+<li>Real Time is about meeting strict timing requirements</li>
+<li>Speed is only one type of timing requirement (task must complete as fast as possible)</li>
+<li>In control systems, there are also other timing requirements such as: Task must occur at a rate of 100 Hz
+<ul class="org-ul">
+<li>Sometimes, as long as the task fits within a 0.01 period, it does not matter how fast it is!</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org810bb4e" class="outline-3">
+<h3 id="org810bb4e">ROS and Real Time</h3>
+<div class="outline-text-3" id="text-org810bb4e">
+<ul class="org-ul">
+<li>A real-time operating system schedules tasks with hard deadlines and guarantees regarding timing</li>
+<li>Linux and other consumer operating systems do not enforce timing requirements (there is a Realtime Linux project however)</li>
+<li>ROS has no provision for handling timing-critical applications
+<ul class="org-ul">
+<li>Often the timing-critical pieces of a robot (such as low-level controls) are handled by microcontrollers and real-time operating systems
+interacting with ROS for higher-level functionality
+<ul class="org-ul">
+<li>For example, the joints of a robot arm might have a precisely-timed position control loop.</li>
+<li>ROS can then set the positions of these joints to complete a high-level task that is less timing-critical</li>
+</ul></li>
+<li>ROS 2 is attempting to address this shortcoming</li>
+</ul></li>
+<li>Examples of Real-Time operating systems include QNX, VxWorks, and FreeRTOS</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9613c87" class="outline-2">
+<h2 id="org9613c87">Time</h2>
+<div class="outline-text-2" id="text-org9613c87">
+<ul class="org-ul">
+<li>Normally, ROS uses the computer's clock for timing</li>
+<li>Also, computers are fast: this means that when we run a task at a fixed frequency the task is completed on time
+<ul class="org-ul">
+<li>However, there will be slight variations in how quickly the task runs due to other tasks running on your computer
+<ul class="org-ul">
+<li>These variations are called Jitter</li>
+</ul></li>
+<li>Most robots have dedicated computers that the code runs on so this is less of an issue</li>
+</ul></li>
+<li>Publishing lots of data or doing lots of processing can greatly affect the timing of tasks in ROS</li>
+<li>ROS uses timestamps to let different nodes know when a message was published, according to the system clock</li>
+<li>When running nodes on multiple machines (such as when using the turtlebot) you must synchronize computer time so that timestamps line up</li>
+</ul>
+</div>
+
+<div id="outline-container-org5e47452" class="outline-3">
+<h3 id="org5e47452">Simulation Time</h3>
+<div class="outline-text-3" id="text-org5e47452">
+<ul class="org-ul">
+<li>In ROS you can manually <a href="http://wiki.ros.org/Clock">control the clock</a> to match a simulation speed or recording timestamps</li>
+<li>For your node to use this artificial clock you must
+<ul class="org-ul">
+<li>Publish messages to the <code>/clock</code> topic</li>
+<li>Set the <code>/use_sim_time</code> parameter to True</li>
+<li>Ensure that you only access time through <code>rospy</code> or <code>roscpp</code> in your nodes</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org028208c" class="outline-2">
+<h2 id="org028208c">Time Concepts</h2>
+<div class="outline-text-2" id="text-org028208c">
+<ul class="org-ul">
+<li>Bandwidth - This is the maximum theoretical capacity of a communication channel (how many bits/second can be transferred)</li>
+<li>Throughput - This is how fast the data actually can be sent</li>
+<li>Latency - This is the delay between when a signal is sent and received
+<ul class="org-ul">
+<li>Often measured by Round Trip Time (RTT), the time it takes for data to go from A to B and back to A</li>
+</ul></li>
+<li>High Throughput High Latency
+<ul class="org-ul">
+<li>Fill a truck with 100,000 10tb hard drives, drive from New York City to San Francisco
+<ul class="org-ul">
+<li>43 hour latency</li>
+<li>6.4 Tb/S throughput</li>
+</ul></li>
+</ul></li>
+<li>Often, it's the latency that is the limiting factor
+<ul class="org-ul">
+<li>For example, ANY signal sent over USB 2.0 has, at minimum 1ms latency</li>
+</ul></li>
+</ul>
+</div>
+
+<div id="outline-container-orga1b7825" class="outline-3">
+<h3 id="orga1b7825">Measuring Time In Ros</h3>
+<div class="outline-text-3" id="text-orga1b7825">
+<ul class="org-ul">
+<li><code>rostopic hz</code>
+<ul class="org-ul">
+<li>See frequency at which topic is being published</li>
+<li>If it is not close to the nominal frequency, you need to either
+<ul class="org-ul">
+<li>Publish More slowly</li>
+<li>Optimize your code for more speed</li>
+</ul></li>
+</ul></li>
+<li>Complete timing statistics are avialbe in ROS and can be viewed in the <code>rqt_graph</code>, see <a href="http://wiki.ros.org/Topics#Topic_statistics">Topic Statistics</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p><p class="outline-2">Author: Matthew Elwin</p></p>
+</div>
+</body>
+</html>

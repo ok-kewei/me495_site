@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2021-12-22 Wed 16:01 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3-D Sensing</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Matthew Elwin">
+<link rel="stylesheet" href="./pubme.css" type="text/css"/>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="./index.html"> HOME </a>
+</div><div id="content">
+<header>
+<h1 class="title">3-D Sensing</h1>
+</header><nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgacea485">Depth Image</a>
+<ul>
+<li><a href="#org4ce9ea6">Structured Light</a></li>
+<li><a href="#org6be47b5">Stereo Depth</a></li>
+<li><a href="#orgefd0eb4">Time of Flight</a></li>
+</ul>
+</li>
+<li><a href="#org2576740">Point Clouds</a>
+<ul>
+<li><a href="#org0979b05">How To Point Cloud</a></li>
+</ul>
+</li>
+<li><a href="#org4bd588c">Devices that Generate Point Clouds</a>
+<ul>
+<li><a href="#org9ec6205">Intel RealSense</a></li>
+<li><a href="#orgb10314a">Using the Realsense In ROS</a></li>
+</ul>
+</li>
+<li><a href="#org61a6e15">Manipulating Point Clouds</a>
+<ul>
+<li><a href="#org60c9e03">ROS</a></li>
+<li><a href="#orgca71c05">C++</a></li>
+<li><a href="#orgaf5484c">Python</a></li>
+</ul>
+</li>
+<li><a href="#orgee762ab">Demonstration</a></li>
+<li><a href="#org55341e5">Resources</a></li>
+</ul>
+</div>
+</nav>
+
+<div id="outline-container-orgacea485" class="outline-2">
+<h2 id="orgacea485">Depth Image</h2>
+<div class="outline-text-2" id="text-orgacea485">
+<p>
+A depth image or depth map is a 2D dimensional image where each pixel value corresponds to the distance of an object from the camera.
+There are several methods for generating a depth image.
+</p>
+</div>
+<div id="outline-container-org4ce9ea6" class="outline-3">
+<h3 id="org4ce9ea6">Structured Light</h3>
+<div class="outline-text-3" id="text-org4ce9ea6">
+<ol class="org-ol">
+<li>An active light emitter outputs a pattern</li>
+<li>Objects deform the pattern</li>
+<li>Image sensor senses the pattern and, using the distortion, computes the depth map</li>
+<li>Good for indoors and short range, because they require seing the projected patterns.</li>
+<li>Can be interfered with when, for example, there are multiple devices outputting patterns</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org6be47b5" class="outline-3">
+<h3 id="org6be47b5">Stereo Depth</h3>
+<div class="outline-text-3" id="text-org6be47b5">
+<ol class="org-ol">
+<li>Two images taken some known fixed distance apart</li>
+<li>By comparing the images taken from known different angles, the depth can be known</li>
+<li>The farther an object is from the sensors, the more similar the two images are</li>
+<li>No active light emission is required so they do not interfere with each other.</li>
+<li>Range is limited by distance between the two sensors.</li>
+<li>Active IR can be used to create known features and enhance the accuracy</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgefd0eb4" class="outline-3">
+<h3 id="orgefd0eb4">Time of Flight</h3>
+<div class="outline-text-3" id="text-orgefd0eb4">
+<ul class="org-ul">
+<li>LiDar</li>
+<li>Measure depth by emitting light and timing how long it takes to reach the sensor</li>
+<li>Very long range</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org2576740" class="outline-2">
+<h2 id="org2576740">Point Clouds</h2>
+<div class="outline-text-2" id="text-org2576740">
+<ul class="org-ul">
+<li>A Point Cloud is a group of 3 dimensional coordinates (points) that
+constitute a discrete description of 3-dimensional objects.</li>
+<li>The <a href="https://pointclouds.org">point cloud library</a> contains routines for manipulating point clouds</li>
+<li><a href="https://wiki.ros.org/perception_pcl">perception pcl</a> ROS meta-package for point clouds</li>
+<li><a href="http://wiki.ros.org/pcl_ros/Tutorials">Point Cloud Tutorials</a></li>
+</ul>
+</div>
+<div id="outline-container-org0979b05" class="outline-3">
+<h3 id="org0979b05">How To Point Cloud</h3>
+<div class="outline-text-3" id="text-org0979b05">
+<ol class="org-ol">
+<li>A depth map provides the distance from the camera in pixel coordinates</li>
+<li>Using a camera calibration, this depth map is converted into real-world x,y,z coordinates</li>
+<li>The pixels can be superimposed with data taken from an RGB camera to provide a 3D image</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org4bd588c" class="outline-2">
+<h2 id="org4bd588c">Devices that Generate Point Clouds</h2>
+<div class="outline-text-2" id="text-org4bd588c">
+<ul class="org-ul">
+<li>Lidars/Laser Scanners 
+<a href="http://wiki.ros/org/velodyne">Velodyne</a>
+<a href="http://wiki.ros.node/urg_node">SCIP 2.2 laser range-finders</a></li>
+<li>Stereo Cameras
+<ul class="org-ul">
+<li><a href="https://www.stereolabs.com/zed/">ZED</a></li>
+<li><a href="https://www.flir.com/support/products/bumblebee2-firewire/?page=4#Overview">Bumblebee 2</a></li>
+</ul></li>
+<li>Depth Cameras
+<ul class="org-ul">
+<li><a href="http://www.intelrealsense.com">RealSense</a></li>
+<li><a href="http://wiki.ros.org/openni2_launch">opennni</a> (Like the Asus Xtion 2)</li>
+<li>Kinect for Box 360 using <a href="http://wiki.ros.org/freenect_launch">freenect_launch</a></li>
+<li>Kinect for Xbox One using <a href="https://github.com/code-iai/iai_kinect2">iai_kinect2</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="outline-container-org9ec6205" class="outline-3">
+<h3 id="org9ec6205">Intel RealSense</h3>
+<div class="outline-text-3" id="text-org9ec6205">
+<ul class="org-ul">
+<li>The <a href="https://www.intelrealsense.com/depth-camera-d435i/">Intel Realsense D435i</a> is an active stereo depth camera</li>
+<li>The realsense drivers and library are not yet released for Ubuntu 20.04 and the ros package is not yet released for ROS noetic</li>
+<li>Follow my <a href="./realsense.html">instructions</a> for installation</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb10314a" class="outline-3">
+<h3 id="orgb10314a">Using the Realsense In ROS</h3>
+<div class="outline-text-3" id="text-orgb10314a">
+<p>
+There are 3 ways of using the realsense in ROS. 
+Official documentation is here for using SDK 2.0: <a href="https://dev.intelrealsense.com/docs/docs-get-started">https://dev.intelrealsense.com/docs/docs-get-started</a>
+</p>
+<ol class="org-ol">
+<li>Use the ROS node: For example, <code>roslaunch realsense2_camera rs_camera.launch filters:=pointcloud</code> align_depth:=true.
+<ul class="org-ul">
+<li>This is the easiest version to use for the most part, and also makes the realsense data available any ROS node</li>
+<li>Usage instructions are on the github page <a href="https://github.com/IntelRealSense/realsense-ros">https://github.com/IntelRealSense/realsense-ros</a></li>
+<li>There is also <a href="https://dev.intelrealsense.com/docs/ros-wrapper">Developer Documentation</a></li>
+<li>Visualize the pointcloud by adding a PointCloud2 object in rviz</li>
+</ul></li>
+<li>Use <code>librealsense</code> python wrappers: wrappers around librealsense for more advanced usage in python</li>
+<li>Use <code>librealsense</code> from C++
+<ul class="org-ul">
+<li>This is for advanced and fast point cloud processing</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org61a6e15" class="outline-2">
+<h2 id="org61a6e15">Manipulating Point Clouds</h2>
+<div class="outline-text-2" id="text-org61a6e15">
+<p>
+There are several ways of manipulating point clouds in ROS. 
+</p>
+</div>
+<div id="outline-container-org60c9e03" class="outline-3">
+<h3 id="org60c9e03">ROS</h3>
+<div class="outline-text-3" id="text-org60c9e03">
+<ul class="org-ul">
+<li>In ROS, point clouds are sent using the <a href="http://docs.ros.org/en/api/sensor_msgs/html/msg/PointCloud2.html">sensor_msgs/PointCloud2</a> message
+<ul class="org-ul">
+<li>You can access the message fields directly but the format is not the most intuitive</li>
+</ul></li>
+<li>The <a href="http://wiki.ros.org/pcl_ros">pcl_ros</a> package is the primary ROS package for manipulating pointclouds</li>
+<li>It includes several stand-alone filters that can be loaded as nodelets to perform common operations</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgca71c05" class="outline-3">
+<h3 id="orgca71c05">C++</h3>
+<div class="outline-text-3" id="text-orgca71c05">
+<ul class="org-ul">
+<li>The <a href="http://wiki.ros.org/pcl_ros">pcl_ros</a> package also lets you convert point cloud messages into C++ data types for use with the <a href="https://pointclouds.org">Point Cloud Library</a>
+<ul class="org-ul">
+<li>While this is the most common way of handling point clouds in ROS, it is also a C++ only way</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgaf5484c" class="outline-3">
+<h3 id="orgaf5484c">Python</h3>
+<div class="outline-text-3" id="text-orgaf5484c">
+<ul class="org-ul">
+<li>The <a href="http://wiki.ros.org/sensor_msgs">sensor_msgs</a> package has python tools for manipulating Pointloud2 data
+<ul class="org-ul">
+<li>See the <a href="http://docs.ros.org/en/noetic/api/sensor_msgs/html/namespacesensor__msgs_1_1point__cloud2.html">point_cloud2</a> API</li>
+<li>See <a href="https://answers.ros.org/question/325917/pointcloud-value-at-a-given-index/">This ROS answer</a> for some details on how to index into the pointcloud.</li>
+</ul></li>
+<li>The <a href="https://wiki.ros.org/ros_numpy">ros_numpy</a> package lets you convert many ROS message types (including PointCloud2) into easy-to-use numpy arrays
+<ul class="org-ul">
+<li>You can use this package to convert a point cloud into a numpy array, manipulate, and then convert back into a pointcloud message</li>
+</ul></li>
+<li>You can install python bindings for pcl using pip (<code>pip3 install python-pcl</code>) or as an Ubuntu package (<code>sudo apt install python3-pcl</code>)
+<ul class="org-ul">
+<li>The <a href="https://strawlab.github.io/python-pcl/">python-pcl</a> package mostly parallels the C++ pcl API</li>
+<li>This <a href="https://stackoverflow.com/questions/39772424/how-to-effeciently-convert-ros-pointcloud2-to-pcl-point-cloud-and-visualize-it-i">Answer</a> demonstrates
+how to convert data from a PointCloud2 message into a <code>pcl.PointCloud</code> object</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgee762ab" class="outline-2">
+<h2 id="orgee762ab">Demonstration</h2>
+<div class="outline-text-2" id="text-orgee762ab">
+<p>
+The following code demonstrates using some basic pcl "nodelets".  Nodelets are essentially ROS nodes that can all
+be run in a single process to reduce communication overhead.  The <a href="https://github.com/NU-MSR/nodelet_pcl_demo">Nodelet PCL demo</a>
+shows you how to combine several built-in nodelets to filter point cloud data.  There is then a C++ node that uses the point cloud
+library (PCL) to perform additional processing.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org55341e5" class="outline-2">
+<h2 id="org55341e5">Resources</h2>
+<div class="outline-text-2" id="text-org55341e5">
+<p>
+<a href="https://www.intelrealsense.com/beginners-guide-to-depth/">Beginner's guide to depth</a>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p><p class="outline-2">Author: Matthew Elwin</p></p>
+</div>
+</body>
+</html>

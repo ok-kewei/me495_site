@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2021-12-22 Wed 16:01 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ROS Basics</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Matthew Elwin">
+<link rel="stylesheet" href="./pubme.css" type="text/css"/>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="./index.html"> HOME </a>
+</div><div id="content">
+<header>
+<h1 class="title">ROS Basics</h1>
+</header><nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org949b407">ROS Basics</a>
+<ul>
+<li><a href="#orge14bada">Documentation</a></li>
+<li><a href="#org2e166e3">Packages</a>
+<ul>
+<li><a href="#orgbf0034c">Installing Packages</a></li>
+<li><a href="#org14f1516">Navigating Packages</a></li>
+</ul>
+</li>
+<li><a href="#orgaaba5ef">Nodes</a></li>
+<li><a href="#org2bf6b09">Messages</a></li>
+<li><a href="#org3cd2408">Topics</a></li>
+<li><a href="#orgc885aad">Services</a></li>
+<li><a href="#org6ff6a4c">Launchfiles</a></li>
+<li><a href="#orgcf72b79">Parameter Server</a>
+<ul>
+<li><a href="#org43dacee">Yaml Files</a></li>
+</ul>
+</li>
+<li><a href="#org2d8ae89">roscore</a></li>
+<li><a href="#orgc4e77a4">Bags</a></li>
+<li><a href="#org0a2a721">The Ros Computation Graph</a></li>
+<li><a href="#org359597b">Logging</a></li>
+<li><a href="#org1b59892">Other tools</a></li>
+<li><a href="#orgae8b0ed">Old Terminology</a></li>
+</ul>
+</li>
+<li><a href="#org955fc65">References</a></li>
+</ul>
+</div>
+</nav>
+
+<div id="outline-container-org949b407" class="outline-2">
+<h2 id="org949b407">ROS Basics</h2>
+<div class="outline-text-2" id="text-org949b407">
+<p>
+The ROS ecosystem consists of a collection of tools, software, and documentation.
+These are used to describe, implement, and inspect a ROS program, which consists of multiple processes (called <i>nodes</i>)
+that run in parallel and communicate with each other using inter-process communication.
+</p>
+</div>
+
+<div id="outline-container-orge14bada" class="outline-3">
+<h3 id="orge14bada">Documentation</h3>
+<div class="outline-text-3" id="text-orge14bada">
+<ul class="org-ul">
+<li><a href="https://wiki.ros.org">https://wiki.ros.org</a> - The ROS wiki should be your first stop for documentation.  Some packages are better documented than others
+<ul class="org-ul">
+<li>The wiki contains a getting started overview here: <a href="https://wiki.ros.org/ROS/StartGuide">https://wiki.ros.org/ROS/StartGuide</a>.</li>
+</ul></li>
+<li><a href="https://answers.ros.org">https://answers.ros.org</a> - Ask questions about ROS.  Often one of the developers will respond.</li>
+<li><a href="https://docs.ros.org">https://docs.ros.org</a> - Many packages wiki page have a "Code API" link that brings you to automatically generated API documentation for the package.</li>
+<li><a href="https://www.ros.org/reps/rep-0000.html">ROS Enhancement Proposals (REP)</a> - Documents ROS design decisions and best practices.</li>
+<li>Built-in documentation: Most ros tools accept a <code>--help</code> argument to display their help</li>
+<li>External Documentation - sometimes the package itself has an external documentation website (often linked on the ROS wiki, often on the github page)</li>
+<li>Some of the tools used in ROS are actually maintained separately from ROS and have their own documentation as well</li>
+<li>The source code is often the ultimate documentation. Do not be afraid to read the code.</li>
+<li>Part of this course is about learning how to use the documentation, so not all the answers will be provided in these notes or in lecture!</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2e166e3" class="outline-3">
+<h3 id="org2e166e3">Packages</h3>
+<div class="outline-text-3" id="text-org2e166e3">
+<p>
+<a href="https://wiki.ros.org/Packages">Packages</a> are the basic organization unit for ROS components.
+</p>
+<ul class="org-ul">
+<li>Contains a collection of files such as source code, configuration files, message descriptions, service descriptions, libraries, data, and build files.</li>
+<li>Dependencies and other meta-information (such as the name and the author) are declared in the <a href="https://wiki.ros.org/Manifest">manifest</a> file, called <code>package.xml</code></li>
+<li>Multiple packages can be stored in a single version control (e.g., git) repository.</li>
+<li>Package contents are stored in a directory <code>&lt;pkg&gt;</code>, where <code>&lt;pkg&gt;</code> is the name of the package.</li>
+<li><a href="https://wiki.ros.org/rospack">rospack</a> is a command-line tool to find information about packages</li>
+<li>Packages also have a <code>CMakeLists.txt</code> file, which is used by the build system to compile the package.</li>
+<li>The <code>catkin_create_pkg</code> tool can automatically create a package for you, providing boilerplate code that is needed.
+<ul class="org-ul">
+<li>Packages can also be created by hand simply by creating a <code>package.xml</code> and a <code>CMakeLists.txt</code> file.</li>
+</ul></li>
+<li>The <a href="https://wiki.ros.org/rospack">rospack</a> tool can be used to investigate dependencies for a ROS package</li>
+</ul>
+</div>
+
+<div id="outline-container-orgbf0034c" class="outline-4">
+<h4 id="orgbf0034c">Installing Packages</h4>
+<div class="outline-text-4" id="text-orgbf0034c">
+<ul class="org-ul">
+<li>You can install a ROS package called <code>&lt;package&gt;</code> released for <code>noetic</code> using <code>apt</code>: 
+<ol class="org-ol">
+<li><code>sudo apt install ros-noetic-&lt;package&gt;</code>, where <code>&lt;package&gt;</code> is the package name where the underscores (<code>_</code>) have been changed to dashes (<code>-</code>).</li>
+</ol></li>
+<li><a href="http://repositories.ros.org/status_page/ros_noetic_default.html">Package Status</a> Displays the status of various ROS packages.
+<ul class="org-ul">
+<li>If a package is not released yet for Noetic, you can usually download its source code into your workspace and compile it.</li>
+</ul></li>
+<li>The <a href="http://wiki.ros.org/TestingRepository">ROS Testing Repository</a> contains pre-release packages that you can also install.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org14f1516" class="outline-4">
+<h4 id="org14f1516">Navigating Packages</h4>
+<div class="outline-text-4" id="text-org14f1516">
+<ul class="org-ul">
+<li>ROS provides tools for navigating packages, as part of <a href="https://wiki.ros.org/rosbash">rosbash</a>. 
+Below is a non-comprehensive list.</li>
+<li><a href="http://wiki.ros.org/rosbash#roscd">roscd</a> changes directory to a package.
+<ul class="org-ul">
+<li><code>roscd log</code> will take you to where the log files are stored, if any have been created</li>
+</ul></li>
+<li><a href="http://wiki.ros.org/rosbash#roscd">rosls</a> lists the files in a package</li>
+<li><a href="http://wiki.ros.org/rosbash#roscd">rosed</a> Opens a file in a package in your text editor</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgaaba5ef" class="outline-3">
+<h3 id="orgaaba5ef">Nodes</h3>
+<div class="outline-text-3" id="text-orgaaba5ef">
+<ul class="org-ul">
+<li><i>Node</i> is ROS's term for a process and is the basic unit of execution in ROS.</li>
+<li>It uses a ROS client library to connect with other nodes
+<ul class="org-ul">
+<li><a href="https://wiki.ros.org/rospy">rospy</a> is the client library for python.</li>
+<li><a href="https://wiki.ros.org/roscpp">roscpp</a> is the client library for C++</li>
+<li>There are <a href="http://wiki.ros.org/Client%20Libraries">client libraries</a> for other languages, but they are used less frequently</li>
+</ul></li>
+<li>A node is an executable, like any other on your computer, except it uses the ROS client library
+to adhere to ROS conventions and communicate with other nodes using <a href="http://wiki.ros.org/ROS/Technical%20Overview">XMLRPC</a>, an inter-process communication protocol.</li>
+<li>The source code for ROS C++ nodes is conventionally stored under the <code>&lt;pkg&gt;/src</code> directory.</li>
+<li>The source code for python nodes is typically under <code>&lt;pkg&gt;/scripts</code> or <code>&lt;pkg&gt;/nodes</code>. These files usually do not have a <code>.py</code> extension</li>
+<li>The <a href="https://wiki.ros/org/rosnode">rosnode</a> is the command line tool for getting information about nodes.</li>
+<li>The <a href="https://wiki.ros.org/rosbash#rosrun">rosrun</a> command lets you run a node.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2bf6b09" class="outline-3">
+<h3 id="org2bf6b09">Messages</h3>
+<div class="outline-text-3" id="text-org2bf6b09">
+<ul class="org-ul">
+<li>Nodes communicate with each other using <a href="https://wiki.ros.org/Messages">messages</a>, which define the structure of the data that is passed between nodes.</li>
+<li>Standard <a href="https://wiki.ros.org/msg#Fields">datatypes</a> such as <code>int64</code>, <code>int8</code>, <code>string</code>, <code>time</code>, <code>bool</code>, <code>float32</code>, <code>float64</code>, and arrays thereof are supported</li>
+<li>Messages can be nested</li>
+<li>There are several standard message types that come with commonly used packages</li>
+<li><a href="https://wiki.ros.org/msg">Messages</a> are defined in <code>.msg</code> files and are stored under the <code>&lt;pkg&gt;/msg</code> directory.</li>
+<li><a href="https://wiki.ros.org/rosmsg">rosmsg</a> is a command line tool for inspecting message types.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3cd2408" class="outline-3">
+<h3 id="org3cd2408">Topics</h3>
+<div class="outline-text-3" id="text-org3cd2408">
+<p>
+<a href="https://wiki.ros.org/Topics">Topics</a> are channels for communication between nodes
+</p>
+<ul class="org-ul">
+<li>A node sends a message over a topic by <i>publishing</i> it</li>
+<li>Other nodes may <i>subscribe</i> to the topic to receive the messages published to it</li>
+<li>A topic is associated with a single message type</li>
+<li>Any number of nodes may publish on or subscribe to a given topic.</li>
+<li>The publishing node does not know when or if a given subscriber receives a message.</li>
+<li>Sensor data and other important information about a robot is often published to specific topics</li>
+<li><a href="https://wiki.ros.org/rostopic">rostopic</a> is the command line tool for manipulating and inspecting topics</li>
+<li><a href="https://wiki.ros.org/rqt_plot">rqt_plot</a> generates real-time plots of topics over time</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc885aad" class="outline-3">
+<h3 id="orgc885aad">Services</h3>
+<div class="outline-text-3" id="text-orgc885aad">
+<p>
+A <a href="https://wiki.ros.org/Services">Service</a> implements a request/reply mechanism for inter-node communication.
+</p>
+<ul class="org-ul">
+<li>A <a href="https://wiki.ros.org/srv">service</a> file <code>.srv</code> uses messages to define the request and reply data types.  
+These files are typically stored in <code>&lt;pkg&gt;/srv</code></li>
+<li>Services are used for sending infrequent signals to a node or for asking a node to perform a calculation</li>
+<li>The node initiating the request is called the <i>client</i> and the node receiving the request is the <i>server</i></li>
+<li>There can be only one <i>server</i> for each Service.</li>
+<li>After initiating a request, the client can wait until a response is received</li>
+<li><a href="https://wiki.ros.org/rosmsg#rossrv">rossrv</a> is used to inspect service types</li>
+<li><a href="https://wiki.ros.org/rosservice">rosservice</a> is used to get information from and manipulate services.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6ff6a4c" class="outline-3">
+<h3 id="org6ff6a4c">Launchfiles</h3>
+<div class="outline-text-3" id="text-org6ff6a4c">
+<p>
+<a href="https://wiki.ros.org/roslaunch/XML">Launchfiles</a> are used to start groups of nodes and pass parameters to them.
+</p>
+<ul class="org-ul">
+<li>Conventionally, launchfiles are stored in <code>&lt;pkg&gt;/launch</code> and end with the <code>.launch</code> extension.</li>
+<li><a href="https://wiki.ros.org/roslaunch">roslaunch</a> is the command-line tool for running launchfiles</li>
+<li>Many projects can be created by using existing packages and connecting their nodes/topics using launchfiles.  
+Your projects, however, will require programming nodes!</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgcf72b79" class="outline-3">
+<h3 id="orgcf72b79">Parameter Server</h3>
+<div class="outline-text-3" id="text-orgcf72b79">
+<p>
+The ROS <a href="http://wiki.ros.org/Parameter%20Server">Parameter Server</a> stores values that can be used by ROS nodesoth
+</p>
+<ul class="org-ul">
+<li>Think of the Parameter server as a global python dictionary storing key-value pairs that can be accessed by any ROS nodes</li>
+<li>The purpose of ROS parameters is to store settings and information used by multiple nodes 
+<ul class="org-ul">
+<li>The information typically does not change</li>
+</ul></li>
+<li>Parameters are used as settings that can be accessed by all ROS nodes and modified by the user
+<ul class="org-ul">
+<li>Use <a href="https://wiki.ors.org/rosparam">rosparam</a> to interact with the parameter server from the command-line.</li>
+</ul></li>
+<li>Typically, nodes read parameters when they start.  Subsequent updates to the parameters are ignored.</li>
+<li>Parameters can store strings, integers, floats, dates, times, and lists</li>
+<li>Oftentimes, parameters are set in Launchfiles, to provide each node you are starting with the proper configuration information</li>
+</ul>
+</div>
+<div id="outline-container-org43dacee" class="outline-4">
+<h4 id="org43dacee">Yaml Files</h4>
+<div class="outline-text-4" id="text-org43dacee">
+<ul class="org-ul">
+<li>Parameters are specified using the <a href="http://wiki.ros.org/rosparam">YAML</a> format</li>
+<li>YAML files can be stored on disk and loaded by <code>rosparam</code> or a launchfile into the parameter server</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org2d8ae89" class="outline-3">
+<h3 id="org2d8ae89">roscore</h3>
+<div class="outline-text-3" id="text-org2d8ae89">
+<p>
+Every running ROS system executes <a href="https://wiki.ros.org/roscore">roscore</a>, which consists of the following components
+</p>
+<ul class="org-ul">
+<li><a href="https://wiki.ros.org/rosmaster">rosmaster</a>, which coordinates connections between nodes</li>
+<li><a href="https://wiki.ros.org/Parameter%20Server">Parameter Server</a>, which enables sharing values between nodes.  Typically used
+for data that does not change over the course of a run.  Nodes communicate with the parameter server to get/set values.</li>
+<li><a href="https://wiki.ros.org/rosout">rosout</a>, which is a node used for logging</li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgc4e77a4" class="outline-3">
+<h3 id="orgc4e77a4">Bags</h3>
+<div class="outline-text-3" id="text-orgc4e77a4">
+<p>
+<a href="https://wiki.ros.org/Bags">Bags</a> enable you to capture the data broadcast over a topic
+</p>
+<ul class="org-ul">
+<li>Captured data can be replayed or plotted</li>
+<li><a href="https://wiki.ros/org/rosbag">rosbag</a> is the tool that is used to manipulate bag files.</li>
+<li>Running robotics experiments is often frustrating and difficult.  Capturing the data from a run and
+testing different algorithms and parameters on it is extremely useful.</li>
+<li><a href="https://wiki.ros.org.org/rqt_bag">rqt_bag</a> lets you visualize the contents of ros bags</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org0a2a721" class="outline-3">
+<h3 id="org0a2a721">The Ros Computation Graph</h3>
+<div class="outline-text-3" id="text-org0a2a721">
+<p>
+The collection of nodes and the communication between them is collectively referred to as the ROS Computation Graph.  
+Being able to view what nodes are running, what topics they publish and subscribe to helps with debugging ROS programs.
+</p>
+
+<p>
+The graph can be viewed with 
+</p>
+<ul class="org-ul">
+<li><a href="https://wiki.ros.org/rosgraph">rosgraph</a>, which prints information about the current ROS computation graph.</li>
+<li><a href="https://wiki.ros.org/rqt_graph">rqt_graph</a>, which is a GUI for viewing the ROS computation graph.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org359597b" class="outline-3">
+<h3 id="org359597b">Logging</h3>
+<div class="outline-text-3" id="text-org359597b">
+<p>
+Nodes can log information at different logger levels, indicating the severity of the message.
+</p>
+<ul class="org-ul">
+<li>There are five verbosity levels: DEBUG, INFO, WARN, ERROR, FATAL</li>
+<li>Log data can also be viewed in real time using <a href="http://wiki.ros.org/rqt_console">rqt_console</a></li>
+<li>The level of logging for a specific node can be tuned using <a href="http://wiki.ros.org/rqt_logger_level">rqt_logger_level</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1b59892" class="outline-3">
+<h3 id="org1b59892">Other tools</h3>
+<div class="outline-text-3" id="text-org1b59892">
+<ul class="org-ul">
+<li><a href="https://wiki.ros.org/roswtf">roswtf</a> helps detect failures and diagnose issues.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgae8b0ed" class="outline-3">
+<h3 id="orgae8b0ed">Old Terminology</h3>
+<div class="outline-text-3" id="text-orgae8b0ed">
+<p>
+This is a collection of deprecated terminology that you may see in the documentations from time to time.
+</p>
+<ul class="org-ul">
+<li><i>stack</i> - Essentially what packages used to be called</li>
+<li><i>rosbuild</i> - the old ros build system, prior to catkin</li>
+<li><i>wet</i> vs <i>dry</i> packages - <i>wet</i> packages use catkin, <i>dry</i> packages use <i>rosbuild</i></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org955fc65" class="outline-2">
+<h2 id="org955fc65">References</h2>
+<div class="outline-text-2" id="text-org955fc65">
+<ul class="org-ul">
+<li>The official <a href="http://wiki.ros.org/ROS/Tutorials">ROS Tutorials</a>. The beginner tutorials are especially worth doing.</li>
+<li><a href="https://wiki.ros.org/rospy/Overview">Overview of rospy</a> provides details of how rospy functions
+<ul class="org-ul">
+<li>Some documentation is only available for melodic. So you will find
+some broken links and need to change melodic to noetic in the url</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p><p class="outline-2">Author: Matthew Elwin</p></p>
+</div>
+</body>
+</html>

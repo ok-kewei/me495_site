@@ -1,0 +1,45 @@
+repositories:
+  dynamixel-workbench:
+    type: git
+    url: http://github.com/ROBOTIS-GIT/dynamixel-workbench.git
+    version: 455fb5a02f03a06cca6e3cd6b0f3196a8072030e
+  dynamixel-workbench-msgs:
+    type: git
+    url: https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs
+    version: 060d73ef2f14422d3e2e555ece2d769630c93111
+  interbotix_ros_arms:
+    type: git
+    url: https://github.com/Interbotix/interbotix_ros_arms.git
+    version: melodic
+  moveit_tutorials:
+    type: git
+    url: https://github.com/ros-planning/moveit_tutorials.git
+    version: master
+  moveit_visual_tools:
+    type: git
+    url: https://github.com/ros-planning/moveit_visual_tools.git
+    version: ca12717b52f451c2394b29f25ec29ac0bc5d303a
+  panda_moveit_config:
+    type: git
+    url: https://github.com/ros-planning/panda_moveit_config
+    version: melodic-devel
+  rqt_tf_tree:
+    type: git
+    url: https://github.com/ros-visualization/rqt_tf_tree.git
+    version: f1b871ad19787b67ac90adc59d3beff74bd87228
+  slam_gmapping:
+    type: git
+    url: https://github.com/ros-perception/slam_gmapping.git
+    version: b916ea23f71fe73593f503810b0a1c59aa0481d8
+  trac_ik:
+    type: git
+    url: https://bitbucket.org/traclabs/trac_ik.git
+    version: master
+  turtlebot3:
+    type: git
+    url: https://github.com/ROBOTIS-GIT/turtlebot3.git
+    version: 3a7d814f47c5c3617f1201b3ea329ba06b4c1b27
+  turtlebot3_simulations:
+    type: git
+    url: https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+    version: 33aaed580eb6de4d36050e5340e60b17479aa213

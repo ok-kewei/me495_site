@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2021-12-22 Wed 16:01 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Custom Workspace</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Matthew Elwin">
+<link rel="stylesheet" href="./pubme.css" type="text/css"/>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="./index.html"> HOME </a>
+</div><div id="content">
+<header>
+<h1 class="title">Custom Workspace</h1>
+</header><nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org7d275a0">Introduction</a></li>
+<li><a href="#orga7e444b">General Steps</a>
+<ul>
+<li><a href="#orgd55cad2">Sharing</a></li>
+</ul>
+</li>
+<li><a href="#org861c64e">For ME495 in Fall 2020</a>
+<ul>
+<li><a href="#org8c8b3c6">To MSR students who participated in the hackathon</a></li>
+<li><a href="#orgac254c5">To Everyone</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org7d275a0" class="outline-2">
+<h2 id="org7d275a0">Introduction</h2>
+<div class="outline-text-2" id="text-org7d275a0">
+<ul class="org-ul">
+<li>When you encounter a package released for another ROS distribution but not the one you are on, chances are you can still use it.</li>
+<li>The ROS API has not changed in a long time</li>
+<li>The way to use these packages is to build them from source and then source the workspace</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga7e444b" class="outline-2">
+<h2 id="orga7e444b">General Steps</h2>
+<div class="outline-text-2" id="text-orga7e444b">
+<p>
+These steps provide a generic example for how to install a package that is not released for <code>noetic</code>
+</p>
+<ol class="org-ol">
+<li>These steps are for a package called <code>foo</code></li>
+<li>Make a new workspace and clone the repository for <code>foo</code> into <code>ws/src/</code>. The upstream repository is listed on the wiki page</li>
+<li><p>
+Make sure that you have installed and initialized <code>rosdep</code>
+</p>
+<pre class="example">
+sudo apt install python3-rosdep
+sudo rosdep init
+rosdep update
+</pre></li>
+<li><a href="https://wiki.ros.org/rosdep">rosdep</a> is ROS's dependency management tool. It allows ROS packages to depend on
+libraries and other <code>system dependencies</code>, that is packages that are a part of the operating system and entirely seperate from ROS</li>
+<li>From <code>ws/</code> run <code>rosdep install --from-paths src --ignore-src -y</code>
+<ul class="org-ul">
+<li>This will attempt to install all the packages dependencies</li>
+<li>If some dependencies could not be found, you should clone those dependencies into your <code>src/</code> space and re-run rosdep</li>
+</ul></li>
+<li><code>catkin_make</code></li>
+<li>Source <code>ws/devel/setup.bash</code> from your <code>.bashrc</code></li>
+</ol>
+</div>
+<div id="outline-container-orgd55cad2" class="outline-3">
+<h3 id="orgd55cad2">Sharing</h3>
+<div class="outline-text-3" id="text-orgd55cad2">
+<ol class="org-ol">
+<li>During this process you may have cloned many repositories</li>
+<li>You can use <code>vscstool</code> (<code>sudo apt install python3-vcstool</code>) to easily share these repositories with others</li>
+<li>Navigate to <code>ws/src</code></li>
+<li>Run <code>vcs export &gt; myrepos.repo</code>. This creates a file that <code>vcs import</code> can use to clone the same repositories that
+you have in your workspace. The <code>--exact</code> flag when exporting will even have <code>vcs import</code> cloning the exact commits in your source space</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org861c64e" class="outline-2">
+<h2 id="org861c64e">For ME495 in Fall 2020</h2>
+<div class="outline-text-2" id="text-org861c64e">
+</div>
+<div id="outline-container-org8c8b3c6" class="outline-3">
+<h3 id="org8c8b3c6">To MSR students who participated in the hackathon</h3>
+<div class="outline-text-3" id="text-org8c8b3c6">
+<p>
+MoveIT has been released for <code>noetic</code>
+</p>
+<pre class="example">
+sudo apt update
+sudo apt upgrade
+</pre>
+<p>
+Remove the <code>source /home/$USER/nuws/devel/setup.bash</code> line that you added for the hackathon.
+</p>
+</div>
+</div>
+<div id="outline-container-orgac254c5" class="outline-3">
+<h3 id="orgac254c5">To Everyone</h3>
+<div class="outline-text-3" id="text-orgac254c5">
+<ol class="org-ol">
+<li>Install some package <code>sudo apt install ros-noetic-dynamixel-sdk ros-noetic-rviz-visual-tools ros-noetic-openslam-gmapping ros-noetic-turtlebot3-msgs ros-noetic-moveit-ros-planning ros-noetic-ros-control ros-noetic-ros-controllers ros-noetic-moveit ros-noetic-joy</code></li>
+<li>Create a new workspace: <code>mkdir -p nuws/src</code></li>
+<li><code>cd ~/nuws/src</code></li>
+<li><code>vcs import --input https://nu-msr.github.io/me495_site/nuws.repo</code></li>
+<li><code>cd ~/nuws</code></li>
+<li><code>rosdep install --from-paths src --ignore-src -y</code>
+<ul class="org-ul">
+<li>This step may list an error about orocos_kdl, which can be safely ignored (see <a href="http://wiki.ros.org/noetic/Migration">http://wiki.ros.org/noetic/Migration</a>).</li>
+</ul></li>
+<li><code>pip3 install modern_robotics</code></li>
+<li><code>catkin_make</code></li>
+<li><code>echo "source ~/nuws/devel/setup.bash" &gt;&gt; ~/.bashrc</code></li>
+<li><code>sudo cp ~/nuws/src/interbotix_ros_arms/interbotix_sdk/10-interbotix-udev.rules /etc/udev/rules.d/</code>
+<ul class="org-ul">
+<li>Udev rules control actions that occur when devices are plugged into the computer</li>
+</ul></li>
+<li><code>sudo udevadm control --reload &amp;&amp; udevadm trigger</code></li>
+<li>Now all the packages you've compiled will be available.
+<ul class="org-ul">
+<li>If something goes wrong with compilation, please let me know!</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p><p class="outline-2">Author: Matthew Elwin</p></p>
+</div>
+</body>
+</html>

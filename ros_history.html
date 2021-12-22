@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2021-12-22 Wed 16:01 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About ROS</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Matthew Elwin">
+<link rel="stylesheet" href="./pubme.css" type="text/css"/>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="./index.html"> HOME </a>
+</div><div id="content">
+<header>
+<h1 class="title">About ROS</h1>
+</header><nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org9cb20cb">Introduction and History</a></li>
+<li><a href="#org4e2f668">Why ROS?</a></li>
+<li><a href="#org60bd37d">The Future of ROS</a></li>
+<li><a href="#org089cf9a">Usage Statistics</a></li>
+<li><a href="#org68a9526">ROS Versions</a></li>
+<li><a href="#orgb2e6e61">Devices that we own that run ROS (non-exhaustive)</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgb295b06">Industrial Robots</a></li>
+<li><a href="#org33126dc">Small Robots</a></li>
+</ul>
+</li>
+<li><a href="#orgbcd3f55">Other items that we own that are compatible with ROS (non-exhaustive)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+
+<div id="outline-container-org9cb20cb" class="outline-2">
+<h2 id="org9cb20cb">Introduction and History</h2>
+<div class="outline-text-2" id="text-org9cb20cb">
+<p>
+The <a href="https://www.ros.org/">Robot Operating System</a> (ROS) is a collection of tools, software libraries, and documentation
+facilitating the development and sharing of robotics software. The term "Operating System" is a bit of a misnomer,
+ it is more like a framework or middleware plus a developer community. Its federated package model allows unrelated entities
+to create and reuse compatible software.
+</p>
+
+<p>
+Historically people and companies developed 
+robotics software specifically tailored to their own robots and needs. 
+For example, industrial robotics companies developed proprietary control software and programming languages
+and there was no central location for robotics researchers to find useful software libraries. Over the years
+there have been several attempts at creating libraries for robotics engineers to share, and ROS can be
+seen as one of the more recent and popular of these attempts. For more information see <a href="https://www.ros.org/about-ros">About ROS</a>.
+</p>
+
+<p>
+In 2007, <a href="https://en.wikipedia.org/Willow_Garage">Willow Garage</a> provided resources for researchers to create general-purpose robotics
+software that could be reused and shared.  From the start, it was an effort involving a community of people at different institutions working on the core infrastructure and
+various packages. In 2014, stewardship of ROS was transferred
+to the <a href="https://www.openrobotics.org">Open Source Robotics Foundation</a> (now referred to as Open Robotics) a 501(c)(3) non-profit organization.
+For more information, see <a href="https://www.ros.org/history">ROS History</a>.
+</p>
+
+<p>
+In the intervening years, ROS has been adopted as a defacto standard in industry and academia.
+While proprietary systems from many major robot manufactures still exist (and perhaps predominate),
+there are now several robots on the market that explicitly support ROS (including the robots you will be using in this class).
+Many start-up robotics companies also use ROS because it enables them to take advantage of the work of others to start with a baseline working system.
+There are also initiatives such as <a href="https://rosindustrial.org">ROS Industrial</a>, which are bringing in more industrial robots into the fold of ROS.  In academia, ROS 
+enables easy sharing of code between research groups and allows people to use the latest code from experts in the field.
+</p>
+
+<ul class="org-ul">
+<li><a href="https://www.redhat.com/en/open-source-stories/robots/breaking-the-wheel">Video about the history of ROS</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4e2f668" class="outline-2">
+<h2 id="org4e2f668">Why ROS?</h2>
+<div class="outline-text-2" id="text-org4e2f668">
+<ol class="org-ol">
+<li>ROS has a large international community of users and contributors, so help is just a click or a forum-post away.</li>
+<li>Provides a framework with infrastructure for visualizing, controlling, and simulating robots.</li>
+<li>ROS has many packages, some of which include difficult-to-implement yet state-of-the-art algorithms.</li>
+<li>Many robots provide ROS interfaces: learn ROS once, be able to use many robots.</li>
+<li>ROS is Open Source.  No black-boxes: it is possible to understand and modify to fit your needs.</li>
+<li>The ability to contribute back enables you to spread your discoveries and enhance your reputation in the field.</li>
+<li>Many companies view ROS as an essential skill. Even for companies not using ROS, knowledge of ROS demonstrates familiarity with robotics in general.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org60bd37d" class="outline-2">
+<h2 id="org60bd37d">The Future of ROS</h2>
+<div class="outline-text-2" id="text-org60bd37d">
+<p>
+ROS 2, the successor to ROS, began development in parallel.  Its first alpha release was in 2015, and it now has stable releases.
+ROS 2 addresses many of the technical shortcomings in ROS 1 and is currently the primary focus of the core ROS developers.
+Although ROS 2 is definitely an exciting development and the future of the community, ROS noetic will still be supported for 3 more years
+and it takes time for transitions to happen, especially in robotics. 
+Currently, ROS 1 remains more complete and commonly used then ROS 2; however, ROS noetic is the last planned release of ROS 1.
+</p>
+
+<p>
+As for which to learn: the balance keeps tipping closer to ROS 2 each year, however, there remain obstacles that make it inappropriate
+for a first course in robotic systems (in my opinion), especially in the context of getting academic-level robotic projects done on a tight time-frame.
+Most importantly, our brand-new robots are not yet supported in ROS 2 (nor are most real robots that you can buy today)!
+</p>
+
+<p>
+For the latest ROS news see <a href="https://planet.ros.org">https://planet.ros.org</a> and for ROS-related discussions see <a href="https://discourse.ros.org">ROS Discourse</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org089cf9a" class="outline-2">
+<h2 id="org089cf9a">Usage Statistics</h2>
+<div class="outline-text-2" id="text-org089cf9a">
+<p>
+In July 2020 (data taken from <a href="http://wiki.ros.org/Metrics">http://wiki.ros.org/Metrics</a>) there were 
+</p>
+<ul class="org-ul">
+<li>2,026,515 Page views of the ROS wiki</li>
+<li>795,114 views of answers. ROS.org</li>
+<li>38,554,145 package downloads</li>
+<li>Courses are taught at 33 universities around the world (<a href="http://wiki.ros.org/Courses">http://wiki.ros.org/Courses</a>)</li>
+</ul>
+
+<p>
+As of July 2020, there were 7410 papers explicitly citing ROS. Note: July 2020 is the last time these particular statistics seem to have been summarized.
+</p>
+
+<p>
+The <a href="https://metrics.ros.org">ROS metrics website</a> has the latest metrics.  
+</p>
+<ol class="org-ol">
+<li>The most widely used ROS 1 or ROS 2 distribution as of July 2021 is ROS melodic (the version prior to noetic), followed by noetic.</li>
+<li>About 70% of ROS users are on ROS 1, as of July 2021.</li>
+<li>ROS noetic has almost twice as many source-code repositories as ROS 2 foxy</li>
+<li>ROS melodic has three times as many source-code repositories as ROS 2 foxy.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org68a9526" class="outline-2">
+<h2 id="org68a9526">ROS Versions</h2>
+<div class="outline-text-2" id="text-org68a9526">
+<ul class="org-ul">
+<li>ROS names each version with an adjective and the name of a turtle species, both starting with the same letter.
+<ul class="org-ul">
+<li>One thing I've learned from using ROS is that there are approximately 356 known species of turtle!</li>
+</ul></li>
+<li>Versions are usually referred to by the adjective only</li>
+<li>The versions increase alphabetically</li>
+<li>The latest stable version of ROS is <code>noetic</code>, which was released in May 2020.</li>
+<li><code>noetic</code> is the first version of ROS to support <code>python 3</code>, which is what we will use in this course.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb2e6e61" class="outline-2">
+<h2 id="orgb2e6e61">Devices that we own that run ROS (non-exhaustive)</h2>
+<div class="outline-text-2" id="text-orgb2e6e61">
+</div>
+<div id="outline-container-orgb295b06" class="outline-4">
+<h4 id="orgb295b06">Industrial Robots</h4>
+<div class="outline-text-4" id="text-orgb295b06">
+<ul class="org-ul">
+<li><a href="https://www.franka.de/robot-system">Franka Emika Panda</a></li>
+<li><a href="https://www.rethinkrobotics.com/sawyer">Rethink Sawyer</a></li>
+<li><a href="https://clearpathrobotics.com/jackal-small-unmanned-ground-vehicle/">Clearpath Jackal</a></li>
+<li><a href="https://clearpathrobotics.com/ridgeback-indoor-robot-platform">Clearpath Ridgeback</a></li>
+<li><a href="https://www.turtlebot.com/turtlebot2">Turtlebot 2</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org33126dc" class="outline-4">
+<h4 id="org33126dc">Small Robots</h4>
+<div class="outline-text-4" id="text-org33126dc">
+<ul class="org-ul">
+<li><a href="https://www.robotis.us/turtlebot-3">Turtlebot 3</a></li>
+<li><a href="https://www.trossenrobotics.com/pincherx-100-robot-arm.aspx">PincherX 100</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgbcd3f55" class="outline-3">
+<h3 id="orgbcd3f55">Other items that we own that are compatible with ROS (non-exhaustive)</h3>
+<div class="outline-text-3" id="text-orgbcd3f55">
+<ul class="org-ul">
+<li><a href="https://www.intelrealsense.com/depth-camera-d435i/">Intel RealSense D435i</a></li>
+<li><a href="https://www.hokuyo-aut.jp/">Hokuyo Laser Scanners</a></li>
+<li><a href="https://raspberrypi.org">RaspberryPi</a>, <a href="https://http//www.hardkernel.com/main/main.php">Odroid</a>, <a href="https://beagleboard.com/black">Beagle Bone Black</a>, <a href="https://developer.nvidia.com/buy-jetson">Jetson</a> - These are embedded computers.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p><p class="outline-2">Author: Matthew Elwin</p></p>
+</div>
+</body>
+</html>

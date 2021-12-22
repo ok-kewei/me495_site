@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2021-12-22 Wed 16:01 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PincherX 100</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Matthew Elwin">
+<link rel="stylesheet" href="./pubme.css" type="text/css"/>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="./index.html"> HOME </a>
+</div><div id="content">
+<header>
+<h1 class="title">PincherX 100</h1>
+</header><nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org57e938f">Overview</a></li>
+<li><a href="#org01c2c98">Installation</a></li>
+<li><a href="#org972087b">Documentation</a>
+<ul>
+<li><a href="#org18f2fc4">Software</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org57e938f" class="outline-2">
+<h2 id="org57e938f">Overview</h2>
+<div class="outline-text-2" id="text-org57e938f">
+<p>
+The <a href="https://www.trossenrobotics.com/pincherx-100-robot-arm.aspx">PincherX 100</a> is a small 5-DOF robot arm.
+The arm can be controlled through ROS or directly through its python API.
+</p>
+
+<ul class="org-ul">
+<li>The arms are located in the back of the lab, in the cabinet labeled <code>PincherX100</code></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org01c2c98" class="outline-2">
+<h2 id="org01c2c98">Installation</h2>
+<div class="outline-text-2" id="text-org01c2c98">
+<ol class="org-ol">
+<li>Install the <a href="./lecture00_preliminaries.html">Preliminaries</a></li>
+<li>Install the <a href="./realsense.html">Realsense Software</a></li>
+<li>Install the <a href="https://github.com/NxRLab/ModernRobotics">Modern Robotics Library</a>: <code>sudo pip3 install modern_robotics</code></li>
+<li><p>
+Create a ROS workspace to compile ROS packages from source:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span class="org-comment-delimiter"># </span><span class="org-comment">Create the workspace</span>
+mkdir -p ~/custom_ws/src
+<span class="org-builtin">cd</span> ~/custom_ws/src
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Clone the repositories</span>
+git clone https://github.com/Interbotix/interbotix_ros_core.git
+git clone https://github.com/Interbotix/interbotix_ros_manipulators.git -b noetic
+git clone https://github.com/Interbotix/interbotix_ros_toolboxes.git
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Remove some CATKIN_IGNORE files so we build these packages</span>
+find . -name CATKIN_IGNORE | xargs rm
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Install the udev rules for the arm</span>
+sudo cp interbotix_ros_core/interbotix_ros_xseries/interbotix_xs_sdk/99-interbotix-udev.rules /etc/udev/rules.d
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Install remaining depenencies and build the workspace</span>
+rosdep install --from-paths src --ignore-src -r -y
+catkin_make
+</pre>
+</div></li>
+<li>Source the workspace form your <code>~/.bashrc</code> by adding <code>source ~/custom_ws/devel/setup.bash</code> to the end of that file.
+<ul class="org-ul">
+<li>Make sure this is after you source <code>/opt/ros/noetic/setup.bash</code></li>
+</ul></li>
+</ol>
+</div>
+</div>
+
+
+<div id="outline-container-org972087b" class="outline-2">
+<h2 id="org972087b">Documentation</h2>
+<div class="outline-text-2" id="text-org972087b">
+</div>
+<div id="outline-container-org18f2fc4" class="outline-3">
+<h3 id="org18f2fc4">Software</h3>
+<div class="outline-text-3" id="text-org18f2fc4">
+<ol class="org-ol">
+<li><a href="https://github.com/Interbotix/interbotix_ros_manipulators/tree/main/interbotix_ros_xsarms">The main documentation page</a></li>
+<li><a href="https://github.com/Interbotix/interbotix_ros_manipulators/tree/main/interbotix_ros_xsarms/examples">Examples</a> 
+<ul class="org-ul">
+<li>The <a href="https://github.com/Interbotix/interbotix_ros_manipulators/tree/main/interbotix_ros_xsarms/examples/python_demos">Python Demos</a>
+demonstrate the usage of the python API.</li>
+</ul></li>
+<li>Don't be afraid to look at the source code! It is well commented.</li>
+<li>The name of our robot, as used by the code, is <code>px100</code></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p><p class="outline-2">Author: Matthew Elwin</p></p>
+</div>
+</body>
+</html>

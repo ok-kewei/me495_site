@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2021-12-22 Wed 16:01 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HDT Adroit 6DOF Manipulator</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Matthew Elwin">
+<link rel="stylesheet" href="./pubme.css" type="text/css"/>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="./index.html"> HOME </a>
+</div><div id="content">
+<header>
+<h1 class="title">HDT Adroit 6DOF Manipulator</h1>
+</header><nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org40b1829">Introduction</a></li>
+<li><a href="#orga2e65fe">Setup</a></li>
+<li><a href="#org72246a6">Control</a></li>
+<li><a href="#org59b5950">Usage</a></li>
+<li><a href="#org91c7ec2">Resources</a></li>
+</ul>
+</div>
+</nav>
+
+<div id="outline-container-org40b1829" class="outline-2">
+<h2 id="org40b1829">Introduction</h2>
+<div class="outline-text-2" id="text-org40b1829">
+<p>
+The Adroit robot arm is light-weight yet very strong 6-DOF robot manipulator arm.
+No Joint Limits!
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga2e65fe" class="outline-2">
+<h2 id="orga2e65fe">Setup</h2>
+<div class="outline-text-2" id="text-orga2e65fe">
+<ol class="org-ol">
+<li>The adroit arm has a power switch and an estop.  The e-stop cuts off power to the arm</li>
+<li>You connect to the adroit arm via ethernet. 
+<ul class="org-ul">
+<li>You must assign yourself a static ip of <code>192.168.0.1</code></li>
+<li>The robot's ip is <code>192.168.0.100</code></li>
+</ul></li>
+<li><p>
+Create the profile:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">nmcli con add type ethernet con-name Adroit
+nmcli con mod Adroit ipv4.addresses 192.168.0.1/24
+nmcli con mod Adroit ipv4.method manual
+nmcli con mod Adroit connection.autoconnect no 
+nmcli con mod Adroit ipv4.never-default true
+</pre>
+</div></li>
+<li>To active the connection, <code>nmcli con up Adroit</code></li>
+<li>To deactivate and return to normal ethernet: <code>nmcli con down Adroit</code></li>
+
+<li><p>
+Clone the code (you will need to request access from me)
+</p>
+<div class="org-src-container">
+<pre class="src src-bash"><span class="org-builtin">cd</span> ~/custom_ws/src
+git clone git@github.com:NU-MSR/hdt_6dof_a24_pincer.git
+</pre>
+</div></li>
+<li>Re-build the custom workspace</li>
+<li>You may also download the manual <code>curl -k "https://beast.mech.northwestern.edu:4443/static/hdt_manual.pdf" &gt; ~/hdt_manual.pdf</code></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org72246a6" class="outline-2">
+<h2 id="org72246a6">Control</h2>
+<div class="outline-text-2" id="text-org72246a6">
+<ol class="org-ol">
+<li>The adroit arm is primarily controlled via moveit.  The arm relies on moveit to prevent self-collisions</li>
+<li>The arm has a very high gear ratio and you should not attempt to backdrive it.</li>
+<li>The primary way to move the arm manually is to use the XBox Game controller</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org59b5950" class="outline-2">
+<h2 id="org59b5950">Usage</h2>
+<div class="outline-text-2" id="text-org59b5950">
+<ol class="org-ol">
+<li><code>roslaunch hdt_6dof_a24_pincer_bringup hdt_arm_bringup_1.launch controller_type:=xbox</code> to launch the robot with the xbox controller.</li>
+<li>Note: you cannot use moveit and the xbox controller at the same time (at least I have not yet figured out how to with the existing source code). 
+<ul class="org-ul">
+<li>If you use the controller to move the arm, you will need to restart the node to then use moveit.</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org91c7ec2" class="outline-2">
+<h2 id="org91c7ec2">Resources</h2>
+<div class="outline-text-2" id="text-org91c7ec2">
+<ul class="org-ul">
+<li><a href="http://www.hdtglobal.com/product/build-your-own/">HDT Adroit Arm</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p><p class="outline-2">Author: Matthew Elwin</p></p>
+</div>
+</body>
+</html>

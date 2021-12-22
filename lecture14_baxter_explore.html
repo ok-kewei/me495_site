@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2021-12-22 Wed 16:01 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exploring the Baxter</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Matthew Elwin">
+<link rel="stylesheet" href="./pubme.css" type="text/css"/>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="../index.html"> UP </a>
+ |
+ <a accesskey="H" href="./index.html"> HOME </a>
+</div><div id="content">
+<header>
+<h1 class="title">Exploring the Baxter</h1>
+</header><nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd768864">Overview</a></li>
+<li><a href="#orgc74f441">The Simulator</a>
+<ul>
+<li><a href="#org0749a66">Experimenting</a></li>
+</ul>
+</li>
+<li><a href="#orgac1be67">Exploring the ROS API</a></li>
+<li><a href="#org6c3762c">Starting Out</a>
+<ul>
+<li><a href="#org3d18890">Tools</a>
+<ul>
+<li><a href="#orgdec3cf9">Exercise</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9c9a113">Moving an Arm</a></li>
+<li><a href="#org7543840">Tips:</a></li>
+<li><a href="#org96318e7">Exercise:</a></li>
+</ul>
+</div>
+</nav>
+
+<div id="outline-container-orgd768864" class="outline-2">
+<h2 id="orgd768864">Overview</h2>
+<div class="outline-text-2" id="text-orgd768864">
+<p>
+When approaching a robot for the first time, you must read documentation, read example source code, and 
+perform experiments to become familiar with it's features.
+This document guides you in how to learn about Baxter and Sawyer by going through an example using the baxter simulator.
+The <a href="./lecture13_rethink.html">previous lecture</a> describes how to setup the robots and provides other reference material.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgc74f441" class="outline-2">
+<h2 id="orgc74f441">The Simulator</h2>
+<div class="outline-text-2" id="text-orgc74f441">
+<ul class="org-ul">
+<li><a href="https://sdk.rethinkrobotics.com/wiki/Baxter_Simulator">The Baxter Simulator</a> provides a safe method of testing out ideas.</li>
+<li><code>roslaunch baxter_gazebo baxter_world.launch</code> to start the simulator</li>
+</ul>
+</div>
+<div id="outline-container-org0749a66" class="outline-3">
+<h3 id="org0749a66">Experimenting</h3>
+<div class="outline-text-3" id="text-org0749a66">
+<ul class="org-ul">
+<li>Run <code>rostopic list</code> and <code>rosservice list</code>
+<ul class="org-ul">
+<li>Just by looking at these topics, the available features should start to be visible</li>
+</ul></li>
+<li>Run <code>rviz</code>, see if you can get a model of the robot visible.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgac1be67" class="outline-2">
+<h2 id="orgac1be67">Exploring the ROS API</h2>
+<div class="outline-text-2" id="text-orgac1be67">
+<ul class="org-ul">
+<li><a href="http://sdk.rethinkrobotics.com/wiki/API_Reference">ROS API</a></li>
+<li>Enable the robot: <code>rosrun baxter_tools enable.py -e</code></li>
+<li>From the <code>rostopic list</code> notice two topics: <code>/robot/limb/left/joint_control</code> and <code>/robot/limb/right/joint_control</code>
+<ul class="org-ul">
+<li>These topics are documented in the ROS API Documentation</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6c3762c" class="outline-2">
+<h2 id="org6c3762c">Starting Out</h2>
+<div class="outline-text-2" id="text-org6c3762c">
+<ul class="org-ul">
+<li><a href="https://sdk.rethinkrobotics.com/wiki/Foundations">Foundations</a> Baxter Foundations Page
+<ul class="org-ul">
+<li>Provides a Good Overview of What to Do</li>
+</ul></li>
+</ul>
+</div>
+<div id="outline-container-org3d18890" class="outline-3">
+<h3 id="org3d18890">Tools</h3>
+<div class="outline-text-3" id="text-org3d18890">
+<ul class="org-ul">
+<li><a href="https://sdk.rethinkrobotics.com/wiki/Foundations#Baxter_SDK_Tools">Tools</a></li>
+<li><code>rosrun baxter_tools robot_enable.py</code> Used to enable/disable the robot
+<ul class="org-ul">
+<li>From the ROS API documentation, we can see what rostopics this tool uses</li>
+<li>You can also examine the source code (note that all source code is in your rethink workspace)</li>
+</ul></li>
+</ul>
+<p>
+-<a href="http://api.rethinkrobotics.com/baxter_interface/html/index.html">Python API Reference</a> also
+  has a method to enable/disable the robot ( see baxter_interface.robot_enable)
+</p>
+</div>
+<div id="outline-container-orgdec3cf9" class="outline-4">
+<h4 id="orgdec3cf9">Exercise</h4>
+<div class="outline-text-4" id="text-orgdec3cf9">
+<ul class="org-ul">
+<li>Enable the robot, get its state, and disable the robot:
+<ul class="org-ul">
+<li>Using the <code>enable_robot.py</code> tool</li>
+<li>Using <code>rostopics</code></li>
+<li><p>
+Using python (code below to get you started)
+</p>
+<pre class="example">
+import baxter_interface
+import rospy
+rospy.init_node("resetter")
+r = baxter_interface.robot_enable.RobotEnable()
+</pre></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9c9a113" class="outline-2">
+<h2 id="org9c9a113">Moving an Arm</h2>
+<div class="outline-text-2" id="text-org9c9a113">
+<ul class="org-ul">
+<li><a href="https://sdk.rethinkrobotics.com/wiki/API_Reference#Arm_Joints">ROS API: Arm Joints</a></li>
+<li>There are 4 joint control modes</li>
+<li>Send <code>/robot/limb/&lt;side&gt;/joint_command</code> messages to an enabled robot to move an arm</li>
+<li>The <a href="https://sdk.rethinkrobotics.com/wiki/Robot_Components">Components</a> page describes
+the hardware of the robot:
+<ul class="org-ul">
+<li>See <a href="https://sdk.rethinkrobotics.com/wiki/Arms">Arms</a> for the joint names (note: use lowercase and prefix with "left" or "right")</li>
+</ul></li>
+<li>Python API to move arm: <code>baxter_interface.Limb</code>
+<ul class="org-ul">
+<li>Create a Node</li>
+<li>Create a <code>Limb</code> object</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7543840" class="outline-2">
+<h2 id="org7543840">Tips:</h2>
+<div class="outline-text-2" id="text-org7543840">
+<ul class="org-ul">
+<li>You can use the source code for <code>baxter_interface</code> to help understand
+the meanings of some fields in messages, since it is just a thin wrapper around
+the ROS API</li>
+<li>For example, after creating a Limb object, <code>joint_names()</code> provides the name of each joint</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org96318e7" class="outline-2">
+<h2 id="org96318e7">Exercise:</h2>
+<div class="outline-text-2" id="text-org96318e7">
+<ul class="org-ul">
+<li>Repeat the above with Sawyer</li>
+<li>Open and close the grippers using both ROS messages and the python API</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p><p class="outline-2">Author: Matthew Elwin</p></p>
+</div>
+</body>
+</html>
