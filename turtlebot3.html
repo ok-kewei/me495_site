@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2022-01-18 Tue 13:00 -->
+<!-- 2022-01-28 Fri 14:35 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TurtleBot3 Quickstart</title>
@@ -76,12 +76,12 @@ turn, the odometry will be incorrect.
 <ul class="org-ul">
 <li>In my opinion this is an odd choice but I have not done experiments comparing its accuracy with wheel odometry</li>
 <li>If using the <code>nuturtlebot</code> firmware (e.g., those in ME495 Sensing Navigation and Machine Learning for Robotics) then odometry relies on encoders.</li>
+<li>The <code>raw</code> firmware used with Sensing Navigation and Machine Learning for Robotics does not have this problem.</li>
 </ul></li>
 </ul></li>
 </ol>
 </div>
 </div>
-
 <div id="outline-container-org523a7d7" class="outline-2">
 <h2 id="org523a7d7">Connecting to the TurtleBot</h2>
 <div class="outline-text-2" id="text-org523a7d7">
@@ -102,9 +102,13 @@ It assumes that the NetworkManager connection name for this network is also <cod
 The steps below will only work if you are on campus or with a VPN.
 </p>
 <ol class="org-ol">
+<li>Download the ssh keys (<code>id_turtle</code> and <code>id_turtle.pub</code>) from Canvas and place them in <code>~/.ssh</code></li>
 <li>Download and run the installation script: <code>curl -L https://raw.githubusercontent.com/m-elwin/robotdns/main/setup_client.sh | sh -s -- eduroam beast.mech.northwestern.edu</code></li>
-<li>Connect to the robotdns server, and accept the fingerprint: <code>ssh -T -i $HOME/.ssh/id_robotdns robotdns@beast.mech.northwestern.edu</code></li>
-<li>Download and install the ssh keys (<code>id_turtle</code> and <code>id_turtle.pub</code>) and place them in <code>~/.ssh</code></li>
+<li>The script will print instructions and create <code>~/.ssh/id_robotdns.pub</code>. TO submit, upload this file on Canvas.</li>
+<li>Connect to the robotdns server, and accept the fingerprint: <code>ssh -T -i $HOME/.ssh/id_robotdns robotdns@beast.mech.northwestern.edu</code>
+<ul class="org-ul">
+<li>If this command fails, you do not yet have access</li>
+</ul></li>
 <li>See <a href="https://github.com/m-elwin/robotdns">robotdns</a> for more details</li>
 </ol>
 </div>
@@ -136,7 +140,6 @@ the same sequence (the <code>SendEnv</code> flag ensures that the value of <code
 </ol>
 </div>
 
-
 <ul class="org-ul">
 <li><a id="orgf818485"></a>Examples<br>
 <div class="outline-text-5" id="text-orgf818485">
@@ -166,6 +169,7 @@ Some example commands when the turtlebot launchfile is running
 <div class="outline-text-3" id="text-org3b7627a">
 <p>
 There are two firmwares used for the turtlebot, <code>stock</code> (which is what the turtlebot comes with) and <code>raw</code> (modified to provide low-level access).
+The appropriate firmware should be pre-installed if using the turtlebot for a class.
 </p>
 <ol class="org-ol">
 <li><code>ssh msr@&lt;turtlebotname&gt; opencr_update stock</code> to load the <code>stock</code> firmware</li>

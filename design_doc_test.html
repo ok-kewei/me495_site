@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2022-01-18 Tue 13:00 -->
+<!-- 2022-01-28 Fri 14:35 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Testing, Documentation, and Design</title>
@@ -191,9 +191,9 @@ Your main code should be
 Add the test (if <code>CATKIN_ENABLE_TESTING</code> is true) in the <code>CMakeLists.txt</code>
 </p>
 <div class="org-src-container">
-<pre class="src src-cmake">if(CATKIN_ENABLE_TESTING)
-   catkin_add_nosetests(directory_with_tests) 
-endif()
+<pre class="src src-cmake"><span class="org-keyword">if</span>(CATKIN_ENABLE_TESTING)
+   <span class="org-function-name">catkin_add_nosetests</span>(directory_with_tests) 
+<span class="org-keyword">endif</span>()
 </pre>
 </div></li>
 <li>You must and <code>&lt;test_depend&gt;</code> on <code>rosunit</code> in your <code>package.xml</code></li>
@@ -223,10 +223,10 @@ run when you are testing</li>
 In your <code>CMakeLists.txt</code> add
 </p>
 <div class="org-src-container">
-<pre class="src src-cmake">if(CATKIN_ENABLE_TESTING)
-    find_package(rostest REQUIRED)
-    add_rostest(test/mytest.test)
-endif()
+<pre class="src src-cmake"><span class="org-keyword">if</span>(CATKIN_ENABLE_TESTING)
+    <span class="org-function-name">find_package</span>(rostest REQUIRED)
+    <span class="org-function-name">add_rostest</span>(test/mytest.test)
+<span class="org-keyword">endif</span>()
 </pre>
 </div>
 <p>
