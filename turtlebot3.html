@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2022-01-28 Fri 14:35 -->
+<!-- 2022-02-03 Thu 16:59 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TurtleBot3 Quickstart</title>
@@ -134,7 +134,7 @@ The steps below will only work if you are on campus or with a VPN.
 <li><code>msr@leonardo$ roslaunch turtlebot3_bringup turtlebot3_robot.launch</code></li>
 <li>From your computer, you can <code>rostopic</code> list all the topics from the turtlebot, <code>echo</code> them, and <code>publish</code> to them</li>
 </ul></li>
-<li>Alternatively you can run <code>roscore</code> on the turtlebot by <code>export ROS_MASTER_URI=https://leonardo:11311</code> and then following
+<li>Alternatively you can run <code>roscore</code> on the turtlebot by <code>export ROS_MASTER_URI=http://leonardo:11311</code> and then following
 the same sequence (the <code>SendEnv</code> flag ensures that the value of <code>ROS_MASTER_URI</code> on the turtlebot matches the value in your local terminal</li>
 <li>When you are done using the turtlebots,  run <code>nmcli con up eduroam</code> to reconnect with regular wireless settings.</li>
 </ol>
